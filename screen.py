@@ -92,7 +92,7 @@ def main():
     image, draw = create_image()
 
     temp_graph = TemperatureGraph(draw=draw, x_offset=1, y_offset=0)
-    ip_graph = IPGraph(draw=draw, x_offset=32, y_offset=0)
+    ip_graph = IPGraph(draw=draw, x_offset=32, y_offset=0,width=127-32,height=14)
     cpu_graph = UsageGraph(draw=draw, x_offset=64, y_offset=15)
     ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40)
 
