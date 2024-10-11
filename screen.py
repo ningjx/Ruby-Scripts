@@ -34,7 +34,6 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
         try:
             with lock:
                 # 获取系统信息
-                temperature = sysinfos.get_cpu_temperature()
                 cpu_usage = sysinfos.get_cpu_usage()
                 ram_usage = sysinfos.get_ram_usage()
 
@@ -45,6 +44,7 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
                 draw.line((0, 14, 127, 14), fill=255, width=1)
                 draw.line((64, 14, 64, 63), fill=255, width=1)
 
+                temperature = sysinfos.get_cpu_temperature()
                 temp_graph.draw(temperature)
                 ip_graph.draw(ip)
         except Exception as e:
