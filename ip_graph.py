@@ -19,6 +19,7 @@ class IPGraph:
         self.direction = False
 
     def draw(self, ip):
+        self.draw_obj.rectangle((self.x_offset, self.y_offset, self.x_offset + self.width, self.y_offset + self.height - 1), fill=0)
         bitmaps.draw_bitmap(self.draw_obj, self.bitmap_Tmp, self.x_offset, self.y_offset)
         self.buffer_draw.rectangle((0,0,self.width,self.height),fill=0)
         if ip != self.pre_ip:

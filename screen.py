@@ -32,12 +32,12 @@ def create_image():
     draw = ImageDraw.Draw(image)
     return image, draw
 
-def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
+def update_graphs_slow(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
     while True:
         try:
             with lock:  # 获取锁，确保其他线程不能同时操作
                 # 清空屏幕
-                draw.rectangle((0, 0, 127, 63), fill=0)
+                #draw.rectangle((0, 0, 127, 63), fill=0)
 
                 # 获取系统信息
                 ip = sysinfos.get_local_ip()
@@ -59,6 +59,18 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
             logging.error(f"Error updating graphs: {e}")
 
         time.sleep(1)  # 更新频率
+
+def update_graphs_fast(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
+    while True:
+        try:
+            with lock:
+                ip = sysinfos.get_local_ip()
+                ip_graph.draw(ip)
+
+        except Exception as e:
+            logging.error(f"Error updating graphs: {e}")
+
+        time.sleep(0.3)  # 更新频率
 
 def display_screen(device, image):
     previous_image = None  # 保存上一帧的图像
@@ -97,15 +109,19 @@ def main():
     ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40)
 
     # 创建绘制线程
-    draw_thread = threading.Thread(target=update_graphs, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
+    draw_thread_slow = threading.Thread(target=update_graphs_slow, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
+    
+    draw_thread_fast = threading.Thread(target=update_graphs_fast, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
     display_thread = threading.Thread(target=display_screen, args=(device, image), daemon=True)
 
     # 启动线程
-    draw_thread.start()
+    draw_thread_slow.start()
+    draw_thread_fast.start()
     display_thread.start()
 
     # 保持主线程运行
-    draw_thread.join()
+    draw_thread_slow.join()
+    draw_thread_fast.join()
     display_thread.join()
 
 if __name__ == "__main__":
