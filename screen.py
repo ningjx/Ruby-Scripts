@@ -9,11 +9,7 @@ from usage_graph import UsageGraph
 from temperature_graph import TemperatureGraph
 from ip_graph import IPGraph
 
-logging.basicConfig(filename='screen.log', level=logging.ERROR,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
-font13 = ImageFont.truetype("SourceHanSansSC-Normal-2.otf",13)
-font8 = ImageFont.truetype("SourceHanSansSC-Normal-2.otf",8)
+logging.basicConfig(filename='screen.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 ip = None
 # 创建锁对象
 lock = threading.Lock()
