@@ -26,7 +26,7 @@ class IPGraph:
             self.pre_ip = ip
             max_usage_box = self.draw_obj.textbbox((0, 0), ip, font=self.font_large)
             text_width = max_usage_box[2]
-            self.static_offset = text_width - (128 - (self.x_offset + 14))
+            self.static_offset = text_width - (127 - (self.x_offset + 14))
         
         if self.static_offset > 0:
             if self.static_offset < - self.scroll_offset or self.scroll_offset > 0:
