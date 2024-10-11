@@ -42,7 +42,7 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
                 ram_graph.draw_usage_graph(ram_usage)
                 # 分隔线
                 draw.line((0, 14, 127, 14), fill=255, width=1)
-                draw.line((64, 14, 64, 63), fill=255, width=1)
+                draw.line((64, 14, 64, 63), fill=0, width=1)
 
                 temperature = sysinfos.get_cpu_temperature()
                 temp_graph.draw(temperature)
@@ -57,10 +57,10 @@ def get_infos(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
     while True:
         try:
             ip = sysinfos.get_local_ip()
-            font = ImageFont.truetype("Roboto-Light.ttf",16)
-            draw.text((0,16), "12345", fill=1, font=font)
+            font = ImageFont.truetype("SanJiLuoLiHei-Cu-2.ttf",50)
+            draw.rectangle((0,15,63,63),fill=255)
+            draw.text((5,11), "99", fill=0, font=font)
             
-            draw.text((0,40), "67890", fill=1, font=font)
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
 
