@@ -2,13 +2,13 @@ from PIL import ImageDraw, ImageFont, Image
 import bitmaps
 
 class IPGraph:
-    def __init__(self,draw,x_offset, y_offset,width, height,font_path="SourceHanSansSC-Normal-2.otf"):
+    def __init__(self,draw,x_offset,y_offset,width,height,font_path="SourceHanSansSC-Normal-2.otf"):
         self.draw_obj = draw  
         self.width = width
         self.height = height
         self.x_offset = x_offset  
         self.y_offset = y_offset
-        
+
         if font_path is None:
             self.font_large = ImageFont.load_default(14)
         else:
