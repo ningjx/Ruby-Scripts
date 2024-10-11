@@ -20,5 +20,5 @@ class LinkQGraph:
             self.font_large = ImageFont.truetype(font_path, 50)
     # 绘制温度信息到图像
     def draw(self, lq):
-        self.draw_obj.rectangle((0,15,63,63),fill=255)
-        self.draw_obj.text((5,11), f"{(lq)}", fill=0, font=self.font_large)
+        self.draw_obj.rectangle((0,15,63,63),fill=0)
+        self.draw_obj.text((5,11), f"{(lq)}", fill=255, font=self.font_large)

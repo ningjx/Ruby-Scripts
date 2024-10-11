@@ -43,12 +43,12 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, lq_graph, draw):
                 ram_graph.draw_usage_graph(ram_usage)
                 # 分隔线
                 draw.line((0, 14, 127, 14), fill=255, width=1)
-                draw.line((64, 14, 64, 63), fill=0, width=1)
+                draw.line((64, 14, 64, 63), fill=255, width=1)
 
                 temperature = sysinfos.get_cpu_temperature()
                 temp_graph.draw(temperature)
                 ip_graph.draw(ip)
-                lq_graph.draw(99)
+                lq_graph.draw(time.localtime().tm_sec)
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
 
