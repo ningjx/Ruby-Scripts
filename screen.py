@@ -8,6 +8,7 @@ import sysinfos
 from usage_graph import UsageGraph
 from temperature_graph import TemperatureGraph
 from ip_graph import IPGraph
+from lq_graph import LinkQGraph
 
 logging.basicConfig(filename='screen.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 ip = None
@@ -28,7 +29,7 @@ def create_image():
     draw = ImageDraw.Draw(image)
     return image, draw
 
-def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
+def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, lq_graph, draw):
     global ip
     while True:
         try:
@@ -47,19 +48,17 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
                 temperature = sysinfos.get_cpu_temperature()
                 temp_graph.draw(temperature)
                 ip_graph.draw(ip)
+                lq_graph.draw(99)
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
 
         time.sleep(1)  # 更新频率
 
-def get_infos(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
+def get_infos():
     global ip
     while True:
         try:
             ip = sysinfos.get_local_ip()
-            font = ImageFont.truetype("SanJiLuoLiHei-Cu-2.ttf",50)
-            draw.rectangle((0,15,63,63),fill=255)
-            draw.text((5,11), "99", fill=0, font=font)
             
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
@@ -109,14 +108,15 @@ def main():
     # 创建图像和绘图对象
     image, draw = create_image()
 
+    lq_graph = LinkQGraph(draw)
     temp_graph = TemperatureGraph(draw=draw, x_offset=1, y_offset=0)
     ip_graph = IPGraph(draw=draw, x_offset=32, y_offset=0,width=127-32,height=14)
     cpu_graph = UsageGraph(draw=draw, x_offset=64, y_offset=15)
     ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40)
 
     # 创建绘制线程
-    get_infos_thread = threading.Thread(target=get_infos, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
-    draw_thread = threading.Thread(target=update_graphs, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
+    get_infos_thread = threading.Thread(target=get_infos, daemon=True)
+    draw_thread = threading.Thread(target=update_graphs, args=(cpu_graph, ram_graph, temp_graph, ip_graph, lq_graph, draw), daemon=True)
     draw_thread_fast = threading.Thread(target=update_graphs_fast, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
     display_thread = threading.Thread(target=display_screen, args=(device, image), daemon=True)
 

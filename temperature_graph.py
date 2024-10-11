@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont
 import bitmaps
 
 class TemperatureGraph:
-    def __init__(self,draw,x_offset, y_offset,font_path="Roboto-Light.ttf"):
+    def __init__(self,draw,x_offset, y_offset,font_path="/home/ning/scripts/Roboto-Light.ttf"):
         self.draw_obj = draw  
         #self.width = width
         #self.height = height

@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont, Image
 import bitmaps
 
 class IPGraph:
-    def __init__(self,draw,x_offset,y_offset,width,height,font_path="Roboto-Light.ttf"):
+    def __init__(self,draw,x_offset,y_offset,width,height,font_path="/home/ning/scripts/Roboto-Light.ttf"):
         self.draw_obj = draw  
         self.width = width
         self.height = height
