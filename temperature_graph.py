@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont
 import bitmaps
 
 class TemperatureGraph:
-    def __init__(self,draw,x_offset, y_offset,font_path="SourceHanSansSC-Normal-2.otf"):
+    def __init__(self,draw,x_offset, y_offset,font_path="Roboto-Light.ttf"):
         self.draw_obj = draw  
         #self.width = width
         #self.height = height
@@ -18,4 +18,4 @@ class TemperatureGraph:
     def draw(self, temperature):
         self.draw_obj.rectangle((self.x_offset, self.y_offset, self.x_offset + 29, self.y_offset + 13), fill=0)
         bitmaps.draw_bitmap(self.draw_obj, self.bitmap_Tmp, self.x_offset, self.y_offset)
-        self.draw_obj.text((self.x_offset + 14, self.y_offset - 5), f"{int(temperature)}", fill=1, font=self.font_large)
+        self.draw_obj.text((self.x_offset + 14, self.y_offset - 3), f"{int(temperature)}", fill=1, font=self.font_large)

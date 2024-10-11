@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont, Image
 import bitmaps
 
 class IPGraph:
-    def __init__(self,draw,x_offset,y_offset,width,height,font_path="SourceHanSansSC-Normal-2.otf"):
+    def __init__(self,draw,x_offset,y_offset,width,height,font_path="Roboto-Light.ttf"):
         self.draw_obj = draw  
         self.width = width
         self.height = height
@@ -41,6 +41,6 @@ class IPGraph:
             else:
                 self.scroll_offset += self.scroll_speed
 
-        self.buffer_draw.text((self.scroll_offset, - 5), ip, fill=1, font=self.font_large)
+        self.buffer_draw.text((self.scroll_offset, - 3), ip, fill=1, font=self.font_large)
 
         self.draw_obj.bitmap((self.x_offset + 14, self.y_offset), self.buffer_image, fill=1)

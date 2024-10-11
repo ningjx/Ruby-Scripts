@@ -41,22 +41,26 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
                 # 绘制图表
                 cpu_graph.draw_usage_graph(cpu_usage)
                 ram_graph.draw_usage_graph(ram_usage)
-                temp_graph.draw(temperature)
-                ip_graph.draw(ip)
                 # 分隔线
                 draw.line((0, 14, 127, 14), fill=255, width=1)
                 draw.line((64, 14, 64, 63), fill=255, width=1)
 
+                temp_graph.draw(temperature)
+                ip_graph.draw(ip)
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
 
         time.sleep(1)  # 更新频率
 
-def get_infos():
+def get_infos(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
     global ip
     while True:
         try:
             ip = sysinfos.get_local_ip()
+            font = ImageFont.truetype("Roboto-Light.ttf",16)
+            draw.text((0,16), "12345", fill=1, font=font)
+            
+            draw.text((0,40), "67890", fill=1, font=font)
         except Exception as e:
             logging.error(f"Error updating graphs: {e}")
 
@@ -111,7 +115,7 @@ def main():
     ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40)
 
     # 创建绘制线程
-    get_infos_thread = threading.Thread(target=get_infos, daemon=True)
+    get_infos_thread = threading.Thread(target=get_infos, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
     draw_thread = threading.Thread(target=update_graphs, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
     draw_thread_fast = threading.Thread(target=update_graphs_fast, args=(cpu_graph, ram_graph, temp_graph, ip_graph, draw), daemon=True)
     display_thread = threading.Thread(target=display_screen, args=(device, image), daemon=True)

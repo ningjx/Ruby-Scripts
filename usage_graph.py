@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont
 import logging
 
 class UsageGraph:
-    def __init__(self,draw,x_offset,y_offset,width=64,height=24,font_path="SourceHanSansSC-Normal-2.otf"):
+    def __init__(self,draw,x_offset,y_offset,width=64,height=24,font_path="Roboto-Light.ttf"):
         self.draw_obj = draw  
         self.width = width  # 折线图的宽度
         self.height = height  # 折线图的高度
@@ -48,8 +48,8 @@ class UsageGraph:
         self.draw_obj.rectangle((self.x_offset + self.width - max_usage_box[2] - 2, self.y_offset, self.x_offset + self.width, self.y_offset + 7), outline=0, fill=0)
         self.draw_obj.rectangle((self.x_offset + self.width - 6, self.y_offset + self.height - 8, self.x_offset + self.width, self.y_offset + self.height - 1), outline=0, fill=0)
 
-        self.draw_obj.text((self.x_offset + self.width - max_usage_box[2] - 1, self.y_offset - 3), max_usage_text, fill=1, font=self.font)
-        self.draw_obj.text((self.x_offset + self.width - 5, self.y_offset + self.height - 11), "0", fill=1, font=self.font)
+        self.draw_obj.text((self.x_offset + self.width - max_usage_box[2] - 0, self.y_offset - 2), max_usage_text, fill=1, font=self.font)
+        self.draw_obj.text((self.x_offset + self.width - 4, self.y_offset + self.height - 10), "0", fill=1, font=self.font)
 
         # 绘制 CPU 使用率数字
         cpu_usage_text = f"{int(self.cpu_usage_list[-1])}%"
