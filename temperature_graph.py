@@ -8,8 +8,12 @@ class TemperatureGraph:
         #self.height = height
         self.x_offset = x_offset  
         self.y_offset = y_offset
-        self.font_large = ImageFont.truetype(font_path, 14)
         self.bitmap_Tmp = bitmaps.get_bitmap_Tmp()
+        
+        if font_path is None:
+            self.font_large = ImageFont.load_default(14)
+        else:
+            self.font_large = ImageFont.truetype(font_path, 14)
     # 绘制温度信息到图像
     def draw(self, temperature):
         self.draw_obj.rectangle((self.x_offset, self.y_offset, self.x_offset + 29, self.y_offset + 13), fill=0)

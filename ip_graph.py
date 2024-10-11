@@ -8,7 +8,12 @@ class IPGraph:
         self.height = height
         self.x_offset = x_offset  
         self.y_offset = y_offset
-        self.font_large = ImageFont.truetype(font_path, 14)
+        
+        if font_path is None:
+            self.font_large = ImageFont.load_default(14)
+        else:
+            self.font_large = ImageFont.truetype(font_path, 14)
+
         self.bitmap_Tmp = bitmaps.get_bitmap_IP()
         self.buffer_image = Image.new('1', (width, height))
         self.buffer_draw = ImageDraw.Draw(self.buffer_image)

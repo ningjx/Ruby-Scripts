@@ -9,8 +9,13 @@ class UsageGraph:
         self.x_offset = x_offset  
         self.y_offset = y_offset  
         self.cpu_usage_list = [0] * self.width  # 初始化 CPU 使用率数据列表
-        self.font = ImageFont.truetype(font_path, 8)  # 字体
-        self.font_large = ImageFont.truetype(font_path, 13)  # 较大的字体
+        
+        if font_path is None:
+            self.font = ImageFont.truetype(8)
+            self.font_large = ImageFont.load_default(13)
+        else:
+            self.font = ImageFont.truetype(font_path, 8)
+            self.font_large = ImageFont.truetype(font_path, 13)
 
     def update_cpu_usage(self, usage):
         self.cpu_usage_list.pop(0)
