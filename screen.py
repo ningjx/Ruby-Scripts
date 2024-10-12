@@ -109,10 +109,10 @@ def main():
     image, draw = create_image()
 
     lq_graph = LinkQGraph(draw)
-    temp_graph = TemperatureGraph(draw=draw, x_offset=1, y_offset=0)
-    ip_graph = IPGraph(draw=draw, x_offset=32, y_offset=0,width=127-32,height=14)
-    cpu_graph = UsageGraph(draw=draw, x_offset=64, y_offset=15)
-    ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40)
+    temp_graph = TemperatureGraph(draw=draw, x_offset=1, y_offset=0, width=30)
+    ip_graph = IPGraph(draw=draw, x_offset=32, y_offset=0)
+    cpu_graph = UsageGraph(draw=draw, x_offset=64, y_offset=15, width=64, height=24)
+    ram_graph = UsageGraph(draw=draw, x_offset=64, y_offset=40, width=64, height=24)
 
     # 创建绘制线程
     get_infos_thread = threading.Thread(target=get_infos, daemon=True)
