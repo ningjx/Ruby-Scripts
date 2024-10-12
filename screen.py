@@ -29,6 +29,17 @@ def create_image():
     draw = ImageDraw.Draw(image)
     return image, draw
 
+def get_infos():
+    global ip
+    while True:
+        try:
+            ip = sysinfos.get_local_ip()
+            
+        except Exception as e:
+            logging.error(f"Error updating graphs: {e}")
+
+        time.sleep(5)  # 更新频率
+
 def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, lq_graph, draw):
     global ip
     while True:
@@ -53,17 +64,6 @@ def update_graphs(cpu_graph, ram_graph, temp_graph, ip_graph, lq_graph, draw):
             logging.error(f"Error updating graphs: {e}")
 
         time.sleep(1)  # 更新频率
-
-def get_infos():
-    global ip
-    while True:
-        try:
-            ip = sysinfos.get_local_ip()
-            
-        except Exception as e:
-            logging.error(f"Error updating graphs: {e}")
-
-        time.sleep(5)  # 更新频率
 
 def update_graphs_fast(cpu_graph, ram_graph, temp_graph, ip_graph, draw):
     global ip
