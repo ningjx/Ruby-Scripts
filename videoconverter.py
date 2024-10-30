@@ -19,7 +19,20 @@ class H265Handler(FileSystemEventHandler):
         
         # 处理 .h265 文件
         if event.src_path.endswith('.h265'):
-            self.convert_h265_to_mp4(event.src_path)
+            self.wait_for_file_ready(event.src_path)
+
+    def wait_for_file_ready(self, h265_file):
+        while True:
+            try:
+                # 尝试以独占模式打开文件
+                with open(h265_file, 'rb') as f:
+                    f.read()  # 读取文件内容
+                break  # 如果成功打开，退出循环
+            except IOError:
+                logging.info(f"File {h265_file} is still being written to. Waiting...")
+                time.sleep(1)  # 等待一秒后重试
+
+        self.convert_h265_to_mp4(h265_file)
 
     def convert_h265_to_mp4(self, h265_file):
         mp4_file = h265_file.rsplit('.', 1)[0] + '.mp4'
@@ -39,7 +52,7 @@ def initial_conversion(path):
     for filename in os.listdir(path):
         if filename.endswith('.h265'):
             h265_file = os.path.join(path, filename)
-            handler.convert_h265_to_mp4(h265_file)
+            handler.wait_for_file_ready(h265_file)
 
 if __name__ == "__main__":
     path = '/home/radxa/ruby/media'
