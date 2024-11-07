@@ -65,7 +65,7 @@ if __name__ == "__main__":
     observer = Observer()
     observer.schedule(handler, path, recursive=False)
 
-    logging.info(f"正在监控目录 {path} 下的新 .h265 文件...")
+    logging.info(f"正在监控目录 {path} 下新创建的 .h265 文件...")
     observer.start()
 
     try:
