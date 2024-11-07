@@ -21,16 +21,21 @@ class H265Handler(FileSystemEventHandler):
         if event.src_path.endswith('.h265'):
             self.wait_for_file_ready(event.src_path)
 
-    def wait_for_file_ready(self, h265_file):
-        while True:
+    def wait_for_file_ready(self, h265_file, retries=10):
+        attempt = 0
+        while attempt < retries:
             try:
                 # 尝试以独占模式打开文件
                 with open(h265_file, 'rb') as f:
                     f.read()  # 读取文件内容
                 break  # 如果成功打开，退出循环
             except IOError:
-                logging.info(f"文件 {h265_file} 被占用，一秒后重试...")
+                attempt += 1
+                logging.info(f"文件 {h265_file} 被占用，等待一秒后重试（第 {attempt}/{retries} 次）...")
                 time.sleep(1)  # 等待一秒后重试
+        else:
+            logging.error(f"文件 {h265_file} 在多次重试后仍被占用，放弃转换。")
+            return
 
         self.convert_h265_to_mp4(h265_file)
 
@@ -41,7 +46,6 @@ class H265Handler(FileSystemEventHandler):
         if not os.path.exists(mp4_file):
             logging.info(f"准备将 {h265_file} 转换为 {mp4_file}...")
             try:
-                #subprocess.run(['ffmpeg -r 30', '-i', h265_file, '-c:v', 'copy', mp4_file], check=True)
                 subprocess.run(['ffmpeg', '-r', '30', '-fflags', '+genpts', '-i', h265_file, '-c:v', 'copy', mp4_file], check=True)
                 logging.info(f"已将 {h265_file} 转换为 {mp4_file}。")
             except subprocess.CalledProcessError as e:
@@ -50,10 +54,13 @@ class H265Handler(FileSystemEventHandler):
             logging.info(f"文件 {mp4_file} 已存在，跳过该转换。")
 
 def initial_conversion(path):
-    for filename in os.listdir(path):
-        if filename.endswith('.h265'):
-            h265_file = os.path.join(path, filename)
-            handler.wait_for_file_ready(h265_file)
+    try:
+        for filename in os.listdir(path):
+            if filename.endswith('.h265'):
+                h265_file = os.path.join(path, filename)
+                handler.wait_for_file_ready(h265_file)
+    except Exception as e:
+        logging.error(f"无法列出目录 {path}，错误原因: {e}")
 
 if __name__ == "__main__":
     path = '/home/radxa/ruby/media'
@@ -65,12 +72,6 @@ if __name__ == "__main__":
     observer = Observer()
     observer.schedule(handler, path, recursive=False)
 
-    logging.info(f"正在监控目录 {path} 下新创建的 .h265 文件...")
+    logging.info(f"服务已启动，正在监控目录 {path} 下新创建的 .h265 文件...")
     observer.start()
-
-    try:
-        while True:
-            time.sleep(1)  # 每秒检查一次
-    except KeyboardInterrupt:
-        observer.stop()
     observer.join()
