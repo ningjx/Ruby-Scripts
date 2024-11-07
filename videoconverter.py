@@ -42,7 +42,7 @@ class H265Handler(FileSystemEventHandler):
             logging.info(f"Converting {h265_file} to {mp4_file}...")
             try:
                 #subprocess.run(['ffmpeg -r 30', '-i', h265_file, '-c:v', 'copy', mp4_file], check=True)
-                subprocess.run(['ffmpeg -r 30 -fflags +genpts', '-i', h265_file, '-c:v', 'copy', mp4_file], check=True)
+                subprocess.run(['ffmpeg', '-r', '30', '-fflags', '+genpts', '-i', h265_file, '-c:v', 'copy', mp4_file], check=True)
                 logging.info(f"Converted {h265_file} to {mp4_file}.")
             except subprocess.CalledProcessError as e:
                 logging.error(f"Error converting {h265_file}: {e}")
