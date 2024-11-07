@@ -1,0 +1,43 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+
+/ {
+    metadata {
+		title = "Enable LED PIN 29 31";
+		compatible = "radxa,zero3";
+		category = "misc";
+		exclusive = "led_power";
+		description = "Enable LEDs for OpenIPC hardware design by Ning";
+	};
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            custom-leds{
+                compatible = "gpio-leds";
+                status = "okay";
+                led1 {
+                    gpios = <&gpio3 RK_PB3 GPIO_ACTIVE_HIGH>;
+                    linux,default-trigger = "heartbeat";
+                };
+            };
+        };
+    };
+
+    fragment@1 {
+        target-path = "/";
+        __overlay__ {
+            custom-leds{
+                compatible = "gpio-leds";
+                status = "okay";
+                led2 {
+                    gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_HIGH>;  
+                    linux,default-trigger = "mmc1";       
+                };
+            };
+        };
+    };
+};
