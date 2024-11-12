@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont
 import bitmaps
 
 class LinkQGraph:
-    def __init__(self,draw,x_offset=0, y_offset=0,font_path="/home/ning/scripts/SanJiLuoLiHei-Cu-2.ttf"):
+    def __init__(self,draw,x_offset=0, y_offset=0,font_path="fonts/SanJiLuoLiHei-Cu-2.ttf"):
         self.draw_obj = draw  
         #self.width = width
         #self.height = height
