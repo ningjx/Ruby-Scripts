@@ -7,7 +7,7 @@ from watchdog.events import FileSystemEventHandler
 
 # 设置日志配置
 logging.basicConfig(
-    filename='/home/ning/scripts/videoconverter.log',  # 日志文件路径
+    filename='videoconverter.log',  # 日志文件路径
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
