@@ -1,0 +1,15 @@
+[Unit]
+Description=Ruby IIC OLED Display Service
+After=network.target
+
+[Service]
+ExecStart=/home/RubyScripts/venv/bin/python3 /home/RubyScripts/Scripts/oled/screen.py
+WorkingDirectory=/home/RubyScripts
+StandardOutput=journal
+StandardError=journal
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

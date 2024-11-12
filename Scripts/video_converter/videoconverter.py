@@ -46,7 +46,8 @@ class H265Handler(FileSystemEventHandler):
         if not os.path.exists(mp4_file):
             logging.info(f"准备将 {video_file} 转换为 {mp4_file}...")
             try:
-                subprocess.run(['ffmpeg', '-r', '30', '-fflags', '+genpts', '-i', video_file, '-c:v', 'copy', mp4_file], check=True)
+                #subprocess.run(['ffmpeg', '-r', '30', '-fflags', '+genpts', '-i', video_file, '-c:v', 'copy', mp4_file], check=True)
+                subprocess.run(['ffmpeg','-i', video_file, '-c:v', 'copy', mp4_file], check=True)
                 logging.info(f"已将 {video_file} 转换为 {mp4_file}。")
             except subprocess.CalledProcessError as e:
                 logging.error(f"转换 {video_file} 失败，失败原因: {e}")
