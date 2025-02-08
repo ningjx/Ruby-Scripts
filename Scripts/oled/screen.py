@@ -17,7 +17,7 @@ lock = threading.Lock()
 
 def init():
     try:
-        serial = i2c(port=3, address=0x3C)
+        serial = i2c(port=3, address=0x3D)
         device = ssd1306(serial, width=128, height=64)
         return device
     except Exception as e:

@@ -8,11 +8,11 @@ sudo chown radxa /home/RubyScripts
 git clone https://github.com/ningjx/Ruby-Scripts /home/RubyScripts/temp
 
 # 复制文件到目标目录
-find /home/RubyScripts/temp -type f ! -name "install.sh" -exec cp {} /home/RubyScripts/ \;
+cp -a /home/RubyScripts/temp/. /home/RubyScripts/ && rm -f /home/RubyScripts/install.sh
 
 # 安装所需软件包
 sudo apt update
-sudo apt install -y ffmpeg python3-venv
+sudo apt install -y ffmpeg python3-venv python3-dev
 
 # 创建并激活 Python 虚拟环境
 python3 -m venv /home/RubyScripts/venv/
@@ -23,7 +23,7 @@ pip install psutil luma.oled Pillow watchdog
 deactivate
 
 # 复制 .service 文件到 systemd 目录
-sudo cp /home/RubyScripts/Scripts/*.service /etc/systemd/system/
+sudo find /home/RubyScripts/Scripts/ -type f -name "*.service" -exec cp {} /etc/systemd/system/ \;
 
 # 重新加载 systemd
 sudo systemctl daemon-reload
