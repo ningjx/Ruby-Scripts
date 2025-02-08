@@ -1,4 +1,5 @@
 import threading
+import os
 from luma.core.interface.serial import i2c
 from luma.oled.device import ssd1306
 from PIL import Image, ImageDraw, ImageFont, ImageChops
@@ -10,7 +11,15 @@ from temperature_graph import TemperatureGraph
 from ip_graph import IPGraph
 from lq_graph import LinkQGraph
 
-logging.basicConfig(filename='screen.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+log_dir = "/home/RubyScripts/logs"
+log_file = os.path.join(log_dir, "screen.log")
+os.makedirs(log_dir, exist_ok=True)
+logging.basicConfig(
+    filename=log_file,
+    level=logging.ERROR,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
 ip = None
 # 创建锁对象
 lock = threading.Lock()
