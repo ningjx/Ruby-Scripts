@@ -1,8 +1,17 @@
 from PIL import ImageDraw, ImageFont
+import os
 import bitmaps
 
 class LinkQGraph:
     def __init__(self,draw,x_offset=0, y_offset=0,font_path="fonts/SanJiLuoLiHei-2.ttf"):
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本目录
+        font_path = os.path.join(script_dir, "fonts", "SanJiLuoLiHei-2.ttf")  # 确保字体文件名正确
+        print(f"[DEBUG] 字体路径: {font_path}")  # 添加调试输出
+
+        if not os.path.exists(font_path):
+            raise FileNotFoundError(f"字体文件不存在: {font_path}")
+
+
         self.draw_obj = draw  
         #self.width = width
         #self.height = height
