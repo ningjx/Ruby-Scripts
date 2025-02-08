@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/home/RubyScripts/venv/bin/python3 /home/RubyScripts/Scripts/oled/screen.py
-WorkingDirectory=/home/RubyScripts
+WorkingDirectory=/home/RubyScripts/Scripts/oled/
 StandardOutput=journal
 StandardError=journal
 User=root

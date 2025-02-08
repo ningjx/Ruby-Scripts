@@ -19,7 +19,7 @@ python3 -m venv /home/RubyScripts/venv/
 source /home/RubyScripts/venv/bin/activate
 
 # 安装 Python 库
-pip install psutil luma.oled Pillow watchdog
+pip install wheel psutil luma.oled Pillow watchdog
 deactivate
 
 # 复制 .service 文件到 systemd 目录
