@@ -5,13 +5,14 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-# 设置日志配置
+log_dir = "/home/RubyScripts/logs"
+log_file = os.path.join(log_dir, "videoconverter.log")
+os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
-    filename='videoconverter.log',  # 日志文件路径
+    filename=log_file,
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
-
 class H265Handler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
