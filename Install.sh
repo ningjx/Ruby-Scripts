@@ -8,7 +8,7 @@ sudo chown radxa /home/RubyScripts
 git clone https://github.com/ningjx/Ruby-Scripts /home/RubyScripts/temp
 
 # 复制文件到目标目录
-cp -a /home/RubyScripts/temp/. /home/RubyScripts/ && rm -f /home/RubyScripts/install.sh
+sudo cp -a /home/RubyScripts/temp/. /home/RubyScripts/ && sudo rm -f /home/RubyScripts/install.sh
 
 # 安装所需软件包
 sudo apt update

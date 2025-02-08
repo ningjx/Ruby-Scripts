@@ -2,7 +2,7 @@ from PIL import ImageDraw, ImageFont
 import logging
 
 class UsageGraph:
-    def __init__(self,draw,x_offset,y_offset,width=64,height=24,font_path="fonts/Roboto-Light.ttf"):
+    def __init__(self,draw,x_offset,y_offset,width=64,height=24,font_path="Scripts/oled/fonts/Roboto-Light.ttf"):
         self.draw_obj = draw  
         self.width = width  # 折线图的宽度
         self.height = height  # 折线图的高度
